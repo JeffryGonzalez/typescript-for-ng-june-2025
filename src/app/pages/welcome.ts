@@ -1,4 +1,4 @@
-import { Component, VERSION } from '@angular/core';
+import { Component, signal, VERSION } from '@angular/core';
 
 @Component({
   selector: 'app-welcome',
@@ -42,10 +42,30 @@ import { Component, VERSION } from '@angular/core';
           </li>
         </ul>
       </div>
+      <div>
+        <button (click)="decrement()" class="btn btn-primary">
+          Go Down By One
+        </button>
+        <span>{{ count() }}</span>
+        <button (click)="goDown()" class="btn btn-primary">Go Up By One</button>
+      </div>
     </div>
   `,
   styles: ``,
 })
 export class Welcome {
   v = VERSION;
+  someField = 'Tacos are delicious';
+
+  another = ['dog', 'cat', 13];
+  myAge = 13;
+
+  count = signal(0);
+
+  goDown() {
+    this.count.update((c) => c + 1);
+  }
+  decrement() {
+    this.count.update((c) => c - 1);
+  }
 }

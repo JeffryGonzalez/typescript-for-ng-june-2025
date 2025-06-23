@@ -10,7 +10,7 @@ import { RouterLink } from '@angular/router';
       <div class="navbar-start">
         <ul class="menu menu-horizontal px-1">
           <li>
-            <a class="" routerLink="/">Home</a>
+            <a class="" routerLink="/">Go Home</a>
           </li>
         </ul>
       </div>
