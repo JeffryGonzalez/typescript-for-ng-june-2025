@@ -16,5 +16,14 @@ describe('Generics', () => {
 
     const firstName = head(names);
     expect(firstName).toBe('bruce');
+
+    // specific
+    // function headOfNumbers(nums: number[]): number {
+    //   return nums[0];
+    // }
+
+    // function headOfStrings(strings: string[]): string {
+    //   return strings[0];
+    // }
   });
 });
