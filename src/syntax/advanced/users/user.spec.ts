@@ -1,8 +1,25 @@
 import { describe, it, expect } from 'vitest';
+import { saveUser, UserCreate, validateUser } from './user';
 
 // These have changed my life, man. Love it. Use it all the time
 // IN SHARED CODE
 
-describe('Branded Types', () => {
-  it.todo('Write This');
+describe('Working with Users', () => {
+  it('creating, validating, saving users', () => {
+    // in order to create a "User" in our system, you must:
+    // note: this is a general pattern, just using "User" as an example.
+    // create a user
+    const userToCreate: UserCreate = {
+      name: 'Jill Smith',
+      age: 15,
+      email: 'jill@aol.com',
+    };
+    // validate the user
+
+    const validUser = validateUser(userToCreate);
+    // then you can do things with the user (like save them), update them, etc.
+
+    console.log(validUser);
+    saveUser(validUser);
+  });
 });
