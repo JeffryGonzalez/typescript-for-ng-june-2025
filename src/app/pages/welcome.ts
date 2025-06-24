@@ -43,11 +43,11 @@ import { Component, signal, VERSION } from '@angular/core';
         </ul>
       </div>
       <div>
-        <button (click)="decrement()" class="btn btn-primary">
-          Go Down By One
+        <button (click)="decrement()" class="btn btn-primary btn-circle">
+          -
         </button>
         <span>{{ count() }}</span>
-        <button (click)="goDown()" class="btn btn-primary">Go Up By One</button>
+        <button (click)="goDown()" class="btn btn-primary btn-circle">+</button>
       </div>
     </div>
   `,
