@@ -5,7 +5,12 @@ import {
   withHooks,
   withMethods,
 } from '@ngrx/signals';
-import { addEntity, setEntities, withEntities } from '@ngrx/signals/entities';
+import {
+  addEntity,
+  removeEntity,
+  setEntities,
+  withEntities,
+} from '@ngrx/signals/entities';
 import {
   CustomerApiItem,
   CustomerCreate,
@@ -58,6 +63,13 @@ export const CustomersStore = signalStore(
   withMethods((store) => {
     const service = inject(CustomersApi);
     return {
+      deleteCustomer: rxMethod<CustomerApiItem>(
+        mergeMap((cust) =>
+          service
+            .deleteCustomer(cust)
+            .pipe(tap(() => patchState(store, removeEntity(cust.id)))),
+        ),
+      ),
       addCustomer: rxMethod<CustomerCreate>(
         mergeMap((cust) =>
           service

@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   input,
   effect,
+  inject,
   signal,
   computed,
 } from '@angular/core';
@@ -10,6 +11,9 @@ import { CustomerApiItem } from '../services/customer-api';
 import { DatePipe } from '@angular/common';
 import { formatDistance } from 'date-fns';
 import { computeMsgId } from '@angular/compiler';
+
+import { CustomersStore } from '../stores/customers';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-customer-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,6 +41,9 @@ import { computeMsgId } from '@angular/compiler';
         <button class="btn btn-sm btn-primary p-4 w-full">
           Add To Call List
         </button>
+        <button (click)="delete()" class="btn btn-sm btn-error p-4 w-full">
+          Delete Customer
+        </button>
       </div>
     </div>
   `,
@@ -45,18 +52,19 @@ import { computeMsgId } from '@angular/compiler';
 export class CustomerCard {
   customer = input.required<CustomerApiItem>();
   #now = signal(new Date());
-
-  //   lastContacted(date: string | Date): string {
-  //     if (!date) return 'Not contacted yet';
-  //     const lastContactedDate = new Date(date);
-  //     return formatDistance(lastContactedDate, new Date()) + ' ago';
-  //   }
+  store = inject(CustomersStore);
+  #router = inject(Router);
   lastContactedAgo = computed(() => {
     const when = this.#now();
     const lastContactedDate = this.customer()?.lastContacted;
     if (!lastContactedDate) return '';
     return formatDistance(new Date(lastContactedDate), when) + ' ago';
   });
+
+  delete() {
+    this.store.deleteCustomer(this.customer());
+    this.#router.navigate(['/customers/list']);
+  }
 
   constructor() {
     effect((onCleanup) => {

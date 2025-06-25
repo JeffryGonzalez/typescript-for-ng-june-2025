@@ -31,4 +31,8 @@ export class CustomersApi {
       .post<RawCustomerApiItem>(this.#baseUrl, customer)
       .pipe(map((item) => item as CustomerApiItem));
   }
+
+  deleteCustomer(cust: CustomerApiItem) {
+    return this.#client.delete(this.#baseUrl + `/${cust.id}`);
+  }
 }

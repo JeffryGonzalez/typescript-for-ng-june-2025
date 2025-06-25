@@ -1,6 +1,6 @@
 import { delay, http, HttpResponse } from 'msw';
 
-const CUSTOMERS = [
+let CUSTOMERS = [
   {
     id: '1',
     name: 'John Doe',
@@ -53,5 +53,10 @@ export const customersHandler = [
     CUSTOMERS.push(newThing);
     await delay();
     return HttpResponse.json(newThing);
+  }),
+  http.delete('/api/customers/:id', async ({ params }) => {
+    const id = params['id'];
+    CUSTOMERS = CUSTOMERS.filter((c) => c.id !== id);
+    return HttpResponse.json({ ok: 'deleted that customer' });
   }),
 ];
