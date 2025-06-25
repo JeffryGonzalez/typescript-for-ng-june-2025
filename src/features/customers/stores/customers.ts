@@ -12,7 +12,11 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { exhaustMap, tap } from 'rxjs';
 import { setIsLoaded, withApiState } from './api-state-feature';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
-import { withCustomerSorting } from './customer-sort-feature';
+import {
+  sortDate,
+  sortText,
+  withCustomerSorting,
+} from './customer-sort-feature';
 
 export const CustomersStore = signalStore(
   withDevtools('Customers'),
@@ -21,6 +25,16 @@ export const CustomersStore = signalStore(
   withCustomerSorting(),
   withComputed((store) => {
     return {
+      sortedList: computed(() => {
+        const entities = store.entities();
+        const sortingBy = store.sortBy();
+
+        if (sortingBy !== 'lastContacted') {
+          return entities.toSorted(sortText(sortingBy));
+        } else {
+          return entities.toSorted(sortDate(sortingBy));
+        }
+      }),
       homeStats: computed(() => {
         const entities = store.entities();
         return {
