@@ -12,6 +12,9 @@ import { RouterLink } from '@angular/router';
           <li>
             <a class="" routerLink="/">Go Home</a>
           </li>
+          <li>
+            <a class="" routerLink="/customers">Customers</a>
+          </li>
         </ul>
       </div>
       <div class="navbar-end"></div>
