@@ -6,11 +6,12 @@ import {
 } from '@angular/core';
 import { CustomersStore } from '../stores/customers';
 import { TitleCasePipe } from '@angular/common';
+import { CamelCaseToSpaces } from '../pipes/camelCaseToSpaces';
 
 @Component({
   selector: 'app-customer-list-sort',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TitleCasePipe],
+  imports: [TitleCasePipe, CamelCaseToSpaces],
   template: `
     <div class="flex justify-between items-center p-4">
       <h2 class="font-bold text-lg">Sort Customers</h2>
@@ -21,7 +22,7 @@ import { TitleCasePipe } from '@angular/common';
             [disabled]="store.sortBy() === key"
             class="btn btn-primary join-item"
           >
-            {{ key | titlecase }}
+            {{ key | appCamelCaseToSpaces | titlecase }}
           </button>
         }
       </div>
