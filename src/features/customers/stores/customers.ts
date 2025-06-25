@@ -11,8 +11,10 @@ import { computed, inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { exhaustMap, tap } from 'rxjs';
 import { setIsLoaded, withApiState } from './api-state-feature';
+import { withDevtools } from '@angular-architects/ngrx-toolkit';
 
 export const CustomersStore = signalStore(
+  withDevtools('Customers'),
   withEntities<CustomerApiItem>(),
   withApiState(),
   withComputed((store) => {
