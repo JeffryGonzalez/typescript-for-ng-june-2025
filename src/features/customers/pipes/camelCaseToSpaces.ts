@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+// lastContacted => last contacted
 @Pipe({
   name: 'appCamelCaseToSpaces',
 })

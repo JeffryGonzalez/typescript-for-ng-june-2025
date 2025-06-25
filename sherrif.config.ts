@@ -9,7 +9,6 @@ export const config: SheriffConfig = {
     'src/shared': ['type:shared'],
   }, // apply tags to your modules
   depRules: {
-    'type:feature': [sameTag, 'type:shared'],
     'domain:app': [sameTag, 'type:shared', 'type:feature'],
     'domain:*': [sameTag, 'type:shared'],
     'type:app': [sameTag, 'type:feature', 'type:shared'],

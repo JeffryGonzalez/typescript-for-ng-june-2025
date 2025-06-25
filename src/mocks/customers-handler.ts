@@ -38,4 +38,20 @@ export const customersHandler = [
     await delay(2000); // Simulate network delay
     return HttpResponse.json(CUSTOMERS);
   }),
+  http.post('/api/customers', async ({ request }) => {
+    const partial = (await request.json()) as {
+      name: string;
+      company: string;
+      phone: string;
+      email: string;
+    };
+
+    const newThing = {
+      ...partial,
+      id: crypto.randomUUID(),
+    };
+    CUSTOMERS.push(newThing);
+    await delay();
+    return HttpResponse.json(newThing);
+  }),
 ];

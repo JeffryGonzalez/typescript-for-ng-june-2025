@@ -1,19 +1,13 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { CustomersStore } from '../stores/customers';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { JsonPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { createFormGroup } from '../../../shared/utils/forms';
 import { CustomerCreate } from '../services/customer-api';
-import { createFormGroup, FormGroupType } from '../../../shared/utils/forms';
+import { CustomersStore } from '../stores/customers';
 
 @Component({
   selector: 'app-customers-add',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, JsonPipe],
+  imports: [ReactiveFormsModule],
   template: `
     <div class="container mx-auto max-w-md p-6">
       <div class="card bg-base-100 shadow-xl">
@@ -93,8 +87,6 @@ import { createFormGroup, FormGroupType } from '../../../shared/utils/forms';
         </div>
       </div>
     </div>
-
-    <pre>{{ form.value | json }}</pre>
   `,
   styles: ``,
 })

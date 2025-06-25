@@ -13,7 +13,7 @@ import {
 } from '../services/customer-api';
 import { computed, inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { exhaustMap, tap } from 'rxjs';
+import { exhaustMap, mergeMap, tap } from 'rxjs';
 import { setIsLoaded, withApiState } from './api-state-feature';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
@@ -58,14 +58,15 @@ export const CustomersStore = signalStore(
   withMethods((store) => {
     const service = inject(CustomersApi);
     return {
-      addCustomer: (customer: CustomerCreate) => {
-        // I'm going to fake this. But you should NOT be allowed to even fake this.
-        const newCustomer: CustomerApiItem = {
-          ...customer,
-          id: crypto.randomUUID(),
-        };
-        patchState(store, addEntity(newCustomer));
-      },
+      addCustomer: rxMethod<CustomerCreate>(
+        mergeMap((cust) =>
+          service
+            .addCustomer(cust)
+            .pipe(
+              tap((newCustomer) => patchState(store, addEntity(newCustomer))),
+            ),
+        ),
+      ),
       _load: rxMethod<void>(
         exhaustMap(() =>
           service
