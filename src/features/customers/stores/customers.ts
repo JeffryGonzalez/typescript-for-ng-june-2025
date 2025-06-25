@@ -12,11 +12,13 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { exhaustMap, tap } from 'rxjs';
 import { setIsLoaded, withApiState } from './api-state-feature';
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
+import { withCustomerSorting } from './customer-sort-feature';
 
 export const CustomersStore = signalStore(
   withDevtools('Customers'),
   withEntities<CustomerApiItem>(),
   withApiState(),
+  withCustomerSorting(),
   withComputed((store) => {
     return {
       homeStats: computed(() => {
