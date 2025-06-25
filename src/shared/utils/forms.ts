@@ -1,6 +1,18 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import { Prettify } from './prettify';
 
+/*
+  {
+    name: string;
+    contactMechanisms: {
+      email: string,
+      phone: string;
+    },
+    company: string;
+  }
+
+*/
+
 export type FormGroupType<T> = {
   [K in keyof T]: T[K] extends object
     ? FormGroup<Prettify<FormGroupType<T[K]>>>

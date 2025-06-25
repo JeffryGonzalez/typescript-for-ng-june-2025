@@ -5,8 +5,12 @@ import {
   withHooks,
   withMethods,
 } from '@ngrx/signals';
-import { setEntities, withEntities } from '@ngrx/signals/entities';
-import { CustomerApiItem, CustomersApi } from '../services/customer-api';
+import { addEntity, setEntities, withEntities } from '@ngrx/signals/entities';
+import {
+  CustomerApiItem,
+  CustomerCreate,
+  CustomersApi,
+} from '../services/customer-api';
 import { computed, inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { exhaustMap, tap } from 'rxjs';
@@ -54,6 +58,14 @@ export const CustomersStore = signalStore(
   withMethods((store) => {
     const service = inject(CustomersApi);
     return {
+      addCustomer: (customer: CustomerCreate) => {
+        // I'm going to fake this. But you should NOT be allowed to even fake this.
+        const newCustomer: CustomerApiItem = {
+          ...customer,
+          id: crypto.randomUUID(),
+        };
+        patchState(store, addEntity(newCustomer));
+      },
       _load: rxMethod<void>(
         exhaustMap(() =>
           service
