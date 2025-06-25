@@ -35,7 +35,7 @@ const CUSTOMERS = [
 
 export const customersHandler = [
   http.get('/api/customers', async () => {
-    await delay(); // Simulate network delay
+    await delay(2000); // Simulate network delay
     return HttpResponse.json(CUSTOMERS);
   }),
 ];
